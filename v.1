@@ -1,0 +1,56 @@
+"""
+Create a program that will play the “cows and bulls” game with the user. The game works like this:
+
+Randomly generate a 4-digit number. Ask the user to guess a 4-digit number.
+For every digit that the user guessed correctly in the correct place, they have a “cow”.
+For every digit the user guessed correctly in the wrong place is a “bull.” Every time the user makes a guess,
+tell them how many “cows” and “bulls” they have. Once the user guesses the correct number, the game is over.
+Keep track of the number of guesses the user makes throughout teh game and tell the user at the end.
+
+"""
+import random, string
+
+cows = 0
+bulls = 0
+
+def rand_gen():
+    secretNum = ""
+    for _ in range(4):
+        secretNum += (''.join(random.choice(string.digits) for _ in range(4)))
+        return secretNum
+
+sn = rand_gen()
+
+
+def cowsAndBulls():
+    global cows
+    global bulls
+    global sn
+
+    guess = ""
+    num_of_tries = 0
+
+    while guess != sn:
+        try:
+            guess = input("Enter a number between 1 & 9999 : ")
+        except IndexError:
+            print("Please enter a 4 digit guess.")
+        cows = 0
+        bulls = 0
+
+        for i in range(len(sn)):
+            if int(guess[i]) == int(sn[i]):
+                cows += 1
+            elif str(guess[i]) in sn:
+                bulls += 1
+
+        print("cows =", cows)
+        print("bulls =", bulls)
+        num_of_tries += 1
+
+        if guess == sn:
+            print("You won!\nIt took you:", num_of_tries, "tries to get it!")
+            break
+
+
+cowsAndBulls()
